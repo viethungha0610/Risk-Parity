@@ -90,6 +90,35 @@ class RiskParity():
         for i in range(len(assets)):
             RRC.append((w_rpp[i]*RRC_component[i]) / RRC_denom)
         self.RRC_ = RRC
+    
+    def visualise_risk_stats(self):
+        import seaborn as sns
+        import matplotlib.pyplot as plt
+        # MRC_i visualisation
+        MRC_fig = sns.barplot(y=self.MRC_, x=self.assets)
+        MRC_fig.set_title('Marginal risk contribution to total portfolio risk')
+        self.MRC_fig_ = MRC_fig
+        plt.show()
+        # RC_i visualisation
+        RC_fig = sns.barplot(y=self.RC_, x=self.assets)
+        RC_fig.set_title('Risk contribution (RC) to total portfolio risk')
+        self.RC_fig_ = RC_fig
+        plt.show()
+        # RRC_i visualisation
+        RRC_fig = sns.barplot(y=self.RRC_, x=self.assets)
+        RRC_fig.set_title('Relative risk contribution (RC) to total portfolio risk')
+        self.RRC_fig_ = RRC_fig
+        plt.show()
+        
+    def out_excel(self, directory=None):
+        """Outputs an excel file with the asset allocation.
+        If the directory is not specified, the method will output the file in the current working directory"""
+        import os
+        self.directory = directory
+        if directory is None:
+            self.directory = os.getcwd()
+        allocation_to_excel = self.allocation_df_.to_excel(f'{self.directory}/RP_allocation.xlsx', index=False)
+        return allocation_to_excel
 
 
 # Child class of RiskParity
@@ -133,10 +162,17 @@ class PrepDataRP():
     def transform(self, df=None):
         if df is None:
             df = self.df
-        price_data = df.iloc[:,1:] 
+        # Drop NaN values to make sure asset time series have the same # of observatives
+        df = df.dropna()
+        # Filter by numeric data types
+        numeric_cols = list(df.loc[:, df.dtypes==np.float64].columns) + list(df.loc[:, df.dtypes==np.int64].columns)
+        price_data = df[numeric_cols]
+        assets = price_data.columns.tolist()
         returns_df = (price_data.iloc[1:,:].values / price_data.iloc[:-1,:] - 1)
         excess_returns_df = returns_df - returns_df.mean()
         excess_returns = np.array(excess_returns_df)
         excess_returns_T = excess_returns.T
         cov_mat = excess_returns_T.dot(excess_returns) / (excess_returns.shape[0] - 1)
-        return cov_mat    
+        # Getting the name of the assets through this attribute
+        self.assets_ = assets
+        return cov_mat
