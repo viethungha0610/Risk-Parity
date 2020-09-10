@@ -13,4 +13,4 @@ To use the data importing <api_data> class, it is crucial that you sign up for t
 
 To understand the project and the workflow, the repository should be explored in this order.
   1. Explore the 'Risk Parity main' notebook 
-  2. Explore the 'Illustrative case' study> notebook
+  2. Explore the 'Illustrative case study' notebook
