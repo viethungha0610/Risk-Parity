@@ -181,8 +181,6 @@ class NonConvexRP(RiskParity):
     """
     def risk_func(self, w=None):
         """This is the modified optimise function for non-convex problem formulation
-        DISCLAIMER: as this does not take into account the long-only and capital budget constraints, this may not work 100%.
-
         Args:
             w (list or array): initial guess for Risk Parity asset allocation, if not specified the default will be equal weights
 
@@ -394,8 +392,8 @@ class api_data():
         time_series_list = []
         for asset in self.assets: 
             # Go through the motions
-            response_json = self.get_api_data(api_key=self.api_key, asset=asset, freq=self.freq, start=self.start, finish=self.finish)
-            time_series_df = self.make_time_series(response_json=response_json, asset=asset)
+            response_dict = self.get_api_data(api_key=self.api_key, asset=asset, freq=self.freq, start=self.start, finish=self.finish)
+            time_series_df = self.make_time_series(response_json=response_dict, asset=asset)
             time_series_dict[f"{asset}_df"] = time_series_df # For example MSFT_df is a time series DataFrame with 2 cols: date and price
             # Now we got a time series dictionary with security name key and their time series DataFrame as value
             time_series_list.append(time_series_dict[f"{asset}_df"])
