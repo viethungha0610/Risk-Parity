@@ -2,6 +2,7 @@ from flask import Flask, request, send_file
 from flasgger import Swagger
 from RiskParity import RiskParity, DataPreprocessor, GetRapidAPIData
 import pandas as pd
+import seaborn as sns
 
 app = Flask(__name__)
 swagger = Swagger(app)
@@ -69,6 +70,11 @@ def RiskParityMain():
     allocation_dict = {}
     for asset, weight in zip(assets, allocation):
         allocation_dict[asset] = weight
+    
+    # Allocation figure
+    allocation_fig = sns.barplot(y=allocation, x=assets)
+    allocation_fig.set_title('Risk Parity portfolio allocation')
+    allocation_fig.figure.savefig('Allocation_fig.png')
 
     # Getting risk statistics output
     rpp.cal_risk_stats()
@@ -83,22 +89,24 @@ def RiskParityMain():
     # Generate summary Excel file
     writer = pd.ExcelWriter('RiskParity_summary.xlsx', engine='xlsxwriter')
     rpp.allocation_df_.to_excel(writer, sheet_name='Allocation', index=False)
-    outcome_df.to_excel(writer, sheet_name='Data', index=False)
-    workbook = writer.book
-    worksheet = writer.sheets['Allocation']
-    worksheet.insert_image('D1', 'MRC_fig.png')
-    worksheet.insert_image('D25', 'RC_fig.png')
-    worksheet.insert_image('D49', 'RRC_fig.png')
+    worksheet_allocation = writer.sheets['Allocation']
+    worksheet_allocation.insert_image('D1', 'Allocation_fig.png')
     risk_stats_df = pd.DataFrame({'Assets': assets, 
-                                'Marginal Risk Contribution': rpp.MRC_,
-                                'Risk Contribution': rpp.RC_,
-                                'Relative Risk Contribution': rpp.RRC_})
+                            'Marginal Risk Contribution': rpp.MRC_,
+                            'Risk Contribution': rpp.RC_,
+                            'Relative Risk Contribution': rpp.RRC_})
     risk_stats_df.to_excel(writer, sheet_name='Risk Stats', index=False)
+    worksheet_riskstats = writer.sheets['Risk Stats']
+    worksheet_riskstats.insert_image('F1', 'MRC_fig.png')
+    worksheet_riskstats.insert_image('F25', 'RC_fig.png')
+    worksheet_riskstats.insert_image('F49', 'RRC_fig.png')
+    outcome_df.to_excel(writer, sheet_name='Data', index=False)
     writer.save()
+
+    # Return summary Excel file
     return send_file('RiskParity_summary.xlsx', 
                     mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 
                     as_attachment=True)
-    # return str(allocation_dict)
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
