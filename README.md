@@ -18,6 +18,7 @@ To understand the project and the workflow, the repository should be explored in
 *HOW TO USE THE RISK PARITY APP*
 ### Method 1: Run the Docker image
 Pull the following Docker image from my public Docker repo and run it from localhost port 5000 on your machine.
+
 `docker pull viethungha0610/portfolio_projects:risk_parity_mini`
 
 ### Method 2: Fork and clone this Github repo and run the `runtime.py` file.
