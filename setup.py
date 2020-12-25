@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-import sympy
 from scipy.optimize import minimize
 import scipy.linalg as la
 import os

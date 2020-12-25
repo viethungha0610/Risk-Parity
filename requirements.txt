@@ -1,0 +1,9 @@
+pandas==0.25.3
+numpy
+scipy
+matplotlib
+seaborn
+requests
+flasgger
+flask
+xlsxwriter==1.2.1
