@@ -14,3 +14,12 @@ To use the data importing <api_data> class, it is crucial that you sign up for t
 To understand the project and the workflow, the repository should be explored in this order.
   1. Explore the 'Risk Parity main' notebook 
   2. Explore the 'Illustrative case study' notebook
+
+*HOW TO USE THE RISK PARITY APP*
+### Method 1: Run the Docker image
+Pull the following Docker image from my public Docker repo and run it from localhost port 5000 on your machine.
+`docker pull viethungha0610/portfolio_projects:risk_parity_mini`
+
+### Method 2: Fork and clone this Github repo and run the `runtime.py` file.
+
+### Method 3: Fork and clone this Github repo and run the `Illustrative Case Study.ipynb` Jupyter notebook.
