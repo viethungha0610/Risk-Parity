@@ -8,7 +8,7 @@ Pioneered by Bridgewater Associates, Risk Parity aims to diversify investments b
 It does so by allocating the portfolio in a way that each investment contributes the equal amount of risk to the portfolio.
 
 *IMPORTANT*
-To use the data importing <api_data> class, it is crucial that you sign up for the Yahoo Finance API via the RapidAPI website.
+To use the data importing `GetRapidAPIData` class, it is crucial that you sign up for the Yahoo Finance API via the RapidAPI website.
 [https://rapidapi.com/apidojo/api/yahoo-finance1]
 
 *HOW TO USE THE RISK PARITY APP*
