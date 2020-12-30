@@ -11,10 +11,6 @@ It does so by allocating the portfolio in a way that each investment contributes
 To use the data importing <api_data> class, it is crucial that you sign up for the Yahoo Finance API via the RapidAPI website.
 [https://rapidapi.com/apidojo/api/yahoo-finance1]
 
-To understand the project and the workflow, the repository should be explored in this order.
-  1. Explore the 'Risk Parity main' notebook 
-  2. Explore the 'Illustrative case study' notebook
-
 *HOW TO USE THE RISK PARITY APP*
 ### Method 1: Run the Docker image
 Pull the following Docker image from my public Docker repo and run it from localhost port 5000 on your machine.
