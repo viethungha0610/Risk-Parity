@@ -19,6 +19,10 @@ Pull the following Docker image from my public Docker repo and run it from local
 
 `docker pull viethungha0610/portfolio_projects:risk_parity_mini`
 
+Then use your browser to open this `http://localhost:5000/apidocs/`
+
 ### Method 2: Fork and clone this Github repo and run the `runtime.py` file.
+
+Then use your browser to open this `http://localhost:5000/apidocs/`
 
 ### Method 3: Fork and clone this Github repo and run the `Illustrative Case Study.ipynb` Jupyter notebook.
